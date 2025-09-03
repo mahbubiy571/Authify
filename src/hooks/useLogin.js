@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { auth } from "../firebase/config";
+import { auth, db } from "../firebase/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { login } from "../app/features/userSlice";
 import { getFirebaseErrorMessage } from "../components/ErrorId";
+import { doc, updateDoc } from "firebase/firestore";
 
 export const useLogin = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,12 @@ export const useLogin = () => {
       if (!req.user) {
         throw new Error("Registration failed");
       }
+
+      const userRef = doc(db, "users", req.user.uid);
+
+      await updateDoc(userRef, {
+        online: true,
+      });
 
       dispatch(login(req.user));
       console.log(req.user);
