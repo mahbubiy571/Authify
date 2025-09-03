@@ -32,96 +32,105 @@ function Login() {
   }, [user]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-base-200">
-      <div className="card w-90 max-w-md bg-base-100 shadow-xl mx-5">
-        <div className="card-body">
-          {!forgetPassword && (
-            <>
-              <h1 className="text-3xl font-bold text-center">Login</h1>
-              <Form method="post" className="flex flex-col gap-4 mt-4">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Enter your email"
-                  className="input input-border focus:outline-none focus:border-blue-500 shadow-blue-500 focus:shadow-lg focus:shadow-blue-400/50 rounded w-full h-9.5"
-                  required
-                />
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Enter your password"
-                  className="input input-border focus:outline-none focus:border-blue-500 shadow-blue-500 focus:shadow-lg focus:shadow-blue-400/50 rounded w-full h-9.5"
-                  required
-                />
-                {!isPending && (
+    <div
+      className="flex items-center justify-center min-h-screen 
+      bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500"
+    >
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="card w-90 max-w-md bg-base-200 shadow-xl mx-5">
+          <div className="card-body">
+            {!forgetPassword && (
+              <>
+                <h1 className="text-3xl font-bold text-center">Login</h1>
+                <Form method="post" className="flex flex-col gap-4 mt-4">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    className="input input-border focus:outline-none focus:border-blue-500 shadow-blue-500 focus:shadow-lg focus:shadow-blue-400/50 rounded w-full h-9.5"
+                    required
+                  />
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    className="input input-border focus:outline-none focus:border-blue-500 shadow-blue-500 focus:shadow-lg focus:shadow-blue-400/50 rounded w-full h-9.5"
+                    required
+                  />
+                  {!isPending && (
+                    <button className="btn btn-primary w-full text-[17px]">
+                      Login
+                    </button>
+                  )}
+                  {isPending && (
+                    <button disabled className="btn btn-disabled w-full">
+                      Loading...
+                    </button>
+                  )}
+                </Form>
+              </>
+            )}
+
+            {forgetPassword && (
+              <>
+                <h1 className="text-2xl font-bold text-center">
+                  Reset Password
+                </h1>
+                <Form method="post" className="flex flex-col gap-4 mt-4">
+                  <input
+                    type="email"
+                    name="emailRecovery"
+                    placeholder="Reset password email"
+                    className="input input-border focus:outline-none focus:border-blue-500 shadow-blue-500 focus:shadow-lg focus:shadow-blue-400/50 rounded w-full h-9.5"
+                    required
+                  />
+
                   <button className="btn btn-primary w-full text-[17px]">
-                    Login
+                    Send
                   </button>
-                )}
-                {isPending && (
-                  <button disabled className="btn btn-disabled w-full">
-                    Loading...
-                  </button>
-                )}
-              </Form>
-            </>
-          )}
+                </Form>
+              </>
+            )}
 
-          {forgetPassword && (
-            <>
-              <h1 className="text-2xl font-bold text-center">Reset Password</h1>
-              <Form method="post" className="flex flex-col gap-4 mt-4">
-                <input
-                  type="email"
-                  name="emailRecovery"
-                  placeholder="Reset password email"
-                  className="input input-border focus:outline-none focus:border-blue-500 shadow-blue-500 focus:shadow-lg focus:shadow-blue-400/50 rounded w-full h-9.5"
-                  required
-                />
+            {!forgetPassword && (
+              <button
+                onClick={() => setForgetPassword(!forgetPassword)}
+                className="mt-2 text-sm text-blue-800 hover:underline self-end"
+              >
+                Forget Password?
+              </button>
+            )}
 
-                <button className="btn btn-primary w-full text-[17px]">
-                  Send
-                </button>
-              </Form>
-            </>
-          )}
+            {forgetPassword && (
+              <button
+                onClick={() => setForgetPassword(!forgetPassword)}
+                className="text-blue-600 hover:underline text-sm mt-2"
+              >
+                Show login
+              </button>
+            )}
 
-          {!forgetPassword && (
-            <button
-              onClick={() => setForgetPassword(!forgetPassword)}
-              className="mt-2 text-sm text-blue-600 hover:underline self-end"
-            >
-              Forget Password?
-            </button>
-          )}
+            {error && (
+              <div className="text-red-600 text-center mt-3 text-sm">
+                {error}
+              </div>
+            )}
 
-          {forgetPassword && (
-            <button
-              onClick={() => setForgetPassword(!forgetPassword)}
-              className="text-blue-600 hover:underline text-sm mt-2"
-            >
-              Show login
-            </button>
-          )}
+            {_error && (
+              <div className="text-red-600 text-center mt-3 text-sm">
+                {_error}
+              </div>
+            )}
 
-          {error && (
-            <div className="text-red-600 text-center mt-3 text-sm">{error}</div>
-          )}
-
-          {_error && (
-            <div className="text-red-600 text-center mt-3 text-sm">
-              {_error}
-            </div>
-          )}
-
-          {!forgetPassword && (
-            <p className="text-center mt-1">
-              Don’t have an account?{" "}
-              <Link to="/register" className="link link-primary">
-                Register
-              </Link>
-            </p>
-          )}
+            {!forgetPassword && (
+              <p className="text-center mt-1">
+                Don’t have an account?{" "}
+                <Link to="/register" className="link link-primary font-medium">
+                  Register
+                </Link>
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>
