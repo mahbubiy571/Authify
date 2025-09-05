@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/config";
 import { isAuthReady, login } from "./app/features/userSlice";
+import CreateTask from "./pages/CreateTask";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,10 @@ function App() {
         {
           index: true,
           element: <Home />,
+        },
+        {
+          path: "create",
+          element: <CreateTask />,
         },
       ],
     },
