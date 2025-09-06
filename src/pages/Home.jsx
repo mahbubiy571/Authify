@@ -1,18 +1,36 @@
 import { useSelector } from "react-redux";
 import { useLogout } from "../hooks/useLogout";
 import { useCollection } from "../hooks/useCollection";
+import { Link } from "react-router-dom";
 
 function Home() {
   const { _logout, error, isPending } = useLogout();
   const { user } = useSelector((store) => store.user);
   const { data } = useCollection("users");
+  const { data: tasks } = useCollection("tasks");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100">
       <div className="flex items-center justify-between px-6 py-4 bg-white/70 backdrop-blur-md shadow-md sticky top-0 z-50 rounded-b-2xl">
-        <h1 className="text-2xl font-bold text-indigo-700">
-          Welcome, {user.displayName} 👋
+        <h1 className="text-2xl font-bold text-indigo-700 flex items-center">
+          Welcome,
+          <span>
+            <img
+              src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+                user.displayName || "User"
+              )}&background=random`}
+              alt={user.displayName}
+              className="mx-1 w-6 h-6 rounded-full shadow-md object-cover"
+            />
+          </span>{" "}
+          {user.displayName} 👋
         </h1>
+        <div>
+          <Link className="btn btn-primary" to="/create">
+            Create
+          </Link>
+        </div>
+
         {!isPending ? (
           <button
             onClick={_logout}
@@ -70,12 +88,9 @@ function Home() {
             >
               <div className="relative mb-4">
                 <img
-                  src={
-                    user.photoURL ||
-                    `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                      user.displayName || "User"
-                    )}&background=random`
-                  }
+                  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+                    user.displayName || "User"
+                  )}&background=random`}
                   alt={user.displayName}
                   className="w-24 h-24 rounded-full border-4 border-white shadow-md mx-auto object-cover"
                 />

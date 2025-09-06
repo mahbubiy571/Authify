@@ -26,7 +26,6 @@ export const useGoogle = () => {
         {
           displayName: req.user.displayName,
           email: req.user.email,
-          photoURL: req.user.photoURL || null,
           online: true,
           uid: req.user.uid,
         },
