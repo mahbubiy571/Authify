@@ -21,12 +21,17 @@ export const useGoogle = () => {
         throw new Error("Registration failed");
       }
 
-      await setDoc(doc(db, "users", req.user.uid), {
-        displayName: req.user.displayName,
-        photoURL: req.user.photoURL,
-        online: true,
-        uid: req.user.uid,
-      });
+      await setDoc(
+        doc(db, "users", req.user.uid),
+        {
+          displayName: req.user.displayName,
+          email: req.user.email,
+          photoURL: req.user.photoURL || null,
+          online: true,
+          uid: req.user.uid,
+        },
+        { merge: true }
+      );
 
       dispatch(login(req.user));
       console.log(req.user);
