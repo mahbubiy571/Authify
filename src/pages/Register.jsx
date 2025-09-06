@@ -2,6 +2,7 @@ import { Form, Link, useActionData } from "react-router-dom";
 import { useRegister } from "../hooks/useRegister";
 import { useEffect, useState } from "react";
 import { formError } from "../components/ErrorId";
+import { useGoogle } from "../hooks/useGoogle";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -13,6 +14,11 @@ function Register() {
   const user = useActionData();
   const [error, setError] = useState(null);
   const { register, isPending, error: _error } = useRegister();
+  const {
+    googleProvider,
+    isPending: isPendingGoogle,
+    error: errorGoogle,
+  } = useGoogle();
 
   useEffect(() => {
     if (user?.name && user?.email && user?.password) {
@@ -57,15 +63,85 @@ function Register() {
                 className="input input-border focus:outline-none focus:border-blue-500 shadow-blue-500 focus:shadow-lg focus:shadow-blue-400/50 rounded w-full h-9.5"
                 required
               />
-
               {!isPending && (
-                <button className="btn btn-primary w-full text-[17px]">
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-lg transition"
+                >
                   Register
                 </button>
               )}
+
               {isPending && (
-                <button disabled className="btn btn-disabled w-full">
-                  Loading...
+                <button
+                  disabled
+                  className="w-full flex items-center justify-center gap-2 bg-blue-400 text-white font-medium py-2 rounded-lg text-lg cursor-not-allowed"
+                >
+                  <svg
+                    className="animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                  </svg>
+                  <span>Loading...</span>
+                </button>
+              )}
+
+              {!isPendingGoogle && (
+                <button
+                  type="button"
+                  onClick={googleProvider}
+                  className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-700 hover:bg-gray-100 transition"
+                >
+                  <img
+                    src="https://www.svgrepo.com/show/355037/google.svg"
+                    alt="Google"
+                    className="w-5 h-5"
+                  />
+                  <span className="font-medium">Continue with Google</span>
+                </button>
+              )}
+
+              {isPendingGoogle && (
+                <button
+                  disabled
+                  className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-400 bg-gray-50 cursor-not-allowed"
+                >
+                  <svg
+                    className="animate-spin h-5 w-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                  </svg>
+                  <span>Loading...</span>
                 </button>
               )}
             </Form>
