@@ -3,6 +3,7 @@ import { useRegister } from "../hooks/useRegister";
 import { useEffect, useState } from "react";
 import { formError } from "../components/ErrorId";
 import { useGoogle } from "../hooks/useGoogle";
+import { useGithub } from "../hooks/useGithub";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -19,6 +20,11 @@ function Register() {
     isPending: isPendingGoogle,
     error: errorGoogle,
   } = useGoogle();
+  const {
+    githubProvider,
+    isPending: githubLoading,
+    error: errorGithub,
+  } = useGithub();
 
   useEffect(() => {
     if (user?.name && user?.email && user?.password) {
@@ -66,7 +72,7 @@ function Register() {
               {!isPending && (
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg text-lg transition"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-1 rounded-lg text-lg transition h-9.5"
                 >
                   Register
                 </button>
@@ -100,6 +106,10 @@ function Register() {
                   <span>Loading...</span>
                 </button>
               )}
+
+              <p className="text-center text-sm text-gray-500 my-2">
+                Or continue with
+              </p>
 
               {!isPendingGoogle && (
                 <button
@@ -144,6 +154,50 @@ function Register() {
                   <span>Loading...</span>
                 </button>
               )}
+
+              {!githubLoading && (
+                <button
+                  type="button"
+                  onClick={githubProvider}
+                  className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-700 hover:bg-gray-100 transition"
+                >
+                  <img
+                    src="https://www.svgrepo.com/show/349375/github.svg"
+                    alt="GitHub"
+                    className="w-5 h-5"
+                  />
+                  <span className="font-medium">Continue with GitHub</span>
+                </button>
+              )}
+
+              {githubLoading && (
+                <button
+                  disabled
+                  className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-400 bg-gray-50 cursor-not-allowed"
+                >
+                  <svg
+                    className="animate-spin h-5 w-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                  </svg>
+                  <span>Loading...</span>
+                </button>
+              )}
             </Form>
 
             {error && (
@@ -155,6 +209,18 @@ function Register() {
             {_error && (
               <div className="text-red-600 text-center mt-3 text-sm">
                 {_error}
+              </div>
+            )}
+
+            {errorGoogle && (
+              <div className="text-red-600 text-center mt-3 text-sm">
+                {errorGoogle}
+              </div>
+            )}
+
+            {errorGithub && (
+              <div className="text-red-600 text-center mt-3 text-sm">
+                {errorGithub}
               </div>
             )}
 

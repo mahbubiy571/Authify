@@ -18,6 +18,9 @@ export function getFirebaseErrorMessage(error) {
     case "auth/email-already-in-use":
       return "This email is already registered. Try logging in instead.";
 
+    case "auth/account-exists-with-different-credential":
+      return "This email is already registered. Please try logging in with a different method.";
+
     case "auth/invalid-email":
       return "The email address is not valid.";
 

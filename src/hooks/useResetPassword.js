@@ -1,5 +1,4 @@
 import { auth } from "../firebase/config";
-import { formError } from "../components/ErrorId";
 import { sendPasswordResetEmail } from "firebase/auth";
 
 export const useResetPassword = () => {
