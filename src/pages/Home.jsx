@@ -28,7 +28,7 @@ function Home() {
         {!isPending ? (
           <button
             onClick={_logout}
-            className="size-9 sm:size-11 p-2 sm:p-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-md hover:shadow-xl hover:scale-110 transition-all duration-300"
+            className="flex ml-auto size-9 sm:size-11 p-2 sm:p-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-md hover:shadow-xl hover:scale-110 transition-all duration-300"
             title="Logout"
           >
             <FiLogOut size={22} />
