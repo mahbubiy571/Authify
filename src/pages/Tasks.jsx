@@ -3,7 +3,7 @@ import { useCollection } from "../hooks/useCollection";
 import { FaRegClipboard } from "react-icons/fa";
 
 function Tasks() {
-  const { data: tasks } = useCollection("tasks");
+  const { data: tasks, loading } = useCollection("tasks");
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -13,6 +13,12 @@ function Tasks() {
         </span>
         All Tasks
       </h2>
+
+      {!loading && tasks?.length === 0 && (
+        <div className="text-center py-20 text-gray-500 font-medium">
+          📋 No tasks found
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {tasks &&
