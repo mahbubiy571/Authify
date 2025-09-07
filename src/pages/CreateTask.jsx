@@ -12,6 +12,7 @@ function CreateTask() {
   const [userOptions, setUserOptions] = useState([]);
   const [attachedUsers, setattachedUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -30,9 +31,9 @@ function CreateTask() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
 
     const formData = new FormData(e.target);
-
     const title = formData.get("title");
     const description = formData.get("description");
     const dueTo = formData.get("due-to");
@@ -52,11 +53,16 @@ function CreateTask() {
       timestamp: serverTimestamp(),
     };
 
-    await addDoc(collection(db, "tasks"), task);
-
-    alert("qo'shildi");
-    navigate("/");
-    console.log(task);
+    try {
+      await addDoc(collection(db, "tasks"), task);
+      alert("qo'shildi");
+      navigate("/");
+    } catch (err) {
+      console.error("Task creation error:", err);
+      alert("Xatolik yuz berdi!");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -157,12 +163,15 @@ function CreateTask() {
 
             <div className="form-control mt-6">
               <button
-                className="btn w-full text-[17px] font-semibold 
-            bg-gradient-to-r from-pink-500 to-purple-600
-             hover:from-pink-700 hover:to-purple-700 
-             text-white rounded-xl shadow-lg transition-normal duration-300"
+                type="submit"
+                disabled={submitting}
+                className={`btn w-full text-[17px] font-semibold 
+                 bg-gradient-to-r from-pink-500 to-purple-600
+                hover:from-pink-700 hover:to-purple-700 
+                text-white rounded-xl shadow-lg transition-normal duration-300
+                 ${submitting ? "opacity-50 cursor-not-allowed" : ""}`}
               >
-                Create
+                {submitting ? "Creating..." : "Create"}
               </button>
             </div>
           </form>
