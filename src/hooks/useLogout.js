@@ -5,9 +5,11 @@ import { getFirebaseErrorMessage } from "../components/ErrorId";
 import { logout } from "../app/features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { doc, updateDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 export function useLogout() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isPending, setIsPending] = useState();
   const [error, setError] = useState(null);
   const { user } = useSelector((store) => store.user);
@@ -22,6 +24,8 @@ export function useLogout() {
 
       await signOut(auth);
       dispatch(logout());
+
+      navigate("/login");
     } catch (error) {
       setError(getFirebaseErrorMessage(error.message));
       console.log(error.message);
