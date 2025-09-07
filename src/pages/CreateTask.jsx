@@ -1,7 +1,7 @@
 import { useCollection } from "../hooks/useCollection";
 import Select from "react-select";
 import { useEffect, useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
@@ -36,6 +36,7 @@ function CreateTask() {
     const title = formData.get("title");
     const description = formData.get("description");
     const dueTo = formData.get("due-to");
+
     const task = {
       title,
       description,
@@ -48,11 +49,10 @@ function CreateTask() {
         )}&background=random`,
       })),
       comments: [],
+      timestamp: serverTimestamp(),
     };
 
-    const cleanedTask = JSON.parse(JSON.stringify(task));
-
-    await addDoc(collection(db, "tasks"), cleanedTask);
+    await addDoc(collection(db, "tasks"), task);
 
     alert("qo'shildi");
     navigate("/");

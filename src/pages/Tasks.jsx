@@ -3,7 +3,7 @@ import { useCollection } from "../hooks/useCollection";
 import { FaRegClipboard } from "react-icons/fa";
 
 function Tasks() {
-  const { data: tasks, loading } = useCollection("tasks");
+  const { data: tasks, loading } = useCollection("tasks", true);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
