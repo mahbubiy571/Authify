@@ -3,24 +3,29 @@ import Select from "react-select";
 import { useEffect, useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../firebase/config";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineHome } from "react-icons/ai";
 
 function CreateTask() {
   const navigate = useNavigate();
   const { data } = useCollection("users");
   const [userOptions, setUserOptions] = useState([]);
   const [attachedUsers, setattachedUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const users = data?.map((user) => {
-      return {
-        value: user.uid,
-        label: user.displayName,
-        photoURL: user.photoURL,
-        uid: user.uid,
-      };
-    });
-    setUserOptions(users || []);
+    if (data) {
+      const users = data.map((user) => {
+        return {
+          value: user.uid,
+          label: user.displayName,
+          photoURL: user.photoURL,
+          uid: user.uid,
+        };
+      });
+      setUserOptions(users || []);
+      setLoading(false);
+    }
   }, [data]);
 
   const handleSubmit = async (e) => {
@@ -56,12 +61,29 @@ function CreateTask() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-200">
-      <div className="card w-full max-w-lg shadow-xl bg-base-100">
+      <div className="card w-90 sm:w-100 md:w-110 max-w-lg shadow-2xl bg-base-100 mx-5 relative">
+        {loading && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 rounded-xl z-10">
+            <div className="w-8 h-8 border-4 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-pink-600 font-medium text-sm mt-2 animate-pulse">
+              Loading users...
+            </p>
+          </div>
+        )}
+
         <div className="card-body">
           <h2 className="card-title text-2xl font-bold mb-4">Create Task</h2>
+          <Link
+            to="/"
+            className="absolute top-4 right-4 flex items-center gap-2 px-2.5 py-2 m-1.5 
+             bg-gradient-to-r from-pink-500 to-purple-600 
+             text-white rounded-full shadow-md hover:scale-110 
+             transition-all duration-300"
+          >
+            <AiOutlineHome size={22} />
+          </Link>
 
           <form onSubmit={handleSubmit} method="post" className="space-y-4">
-            {/* Title */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Title</span>
@@ -70,12 +92,11 @@ function CreateTask() {
                 name="title"
                 type="text"
                 placeholder="Enter task title"
-                className="input input-bordered w-full"
+                className="input input-border focus:outline-none focus:border-pink-500 shadow-pink-500 focus:shadow-lg focus:shadow-pink-400/50 rounded w-full h-9.5"
                 required
               />
             </div>
 
-            {/* Description */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Description</span>
@@ -83,13 +104,12 @@ function CreateTask() {
               <textarea
                 name="description"
                 placeholder="Write task description"
-                className="textarea textarea-bordered w-full"
+                className="textarea textarea-bordered focus:outline-none focus:border-pink-500 focus:shadow-lg focus:shadow-pink-400/50 shadow-pink-500 rounded w-full"
                 rows="4"
                 required
               />
             </div>
 
-            {/* Due Date */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Due Date</span>
@@ -97,12 +117,11 @@ function CreateTask() {
               <input
                 name="due-to"
                 type="date"
-                className="input input-bordered w-full"
+                className="input input-border focus:outline-none focus:border-purple-600 shadow-to-purple-600 focus:shadow-lg focus:shadow-purple-400/50 rounded w-full h-9.5"
                 required
               />
             </div>
 
-            {/* Users */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Assign Users</span>
@@ -136,9 +155,15 @@ function CreateTask() {
               />
             </div>
 
-            {/* Submit */}
             <div className="form-control mt-6">
-              <button className="btn btn-primary w-full">Create</button>
+              <button
+                className="btn w-full text-[17px] font-semibold 
+            bg-gradient-to-r from-pink-500 to-purple-600
+             hover:from-pink-700 hover:to-purple-700 
+             text-white rounded-xl shadow-lg transition-normal duration-300"
+              >
+                Create
+              </button>
             </div>
           </form>
         </div>
