@@ -16,6 +16,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/config";
 import { isAuthReady, login } from "./app/features/userSlice";
 import CreateTask from "./pages/CreateTask";
+import Task from "./pages/Task";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,8 +35,12 @@ function App() {
           element: <Home />,
         },
         {
-          path: "create",
+          path: "/create",
           element: <CreateTask />,
+        },
+        {
+          path: "/task/:id",
+          element: <Task />,
         },
       ],
     },

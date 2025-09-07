@@ -10,7 +10,12 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, { payload }) => {
-      state.user = payload;
+      state.user = {
+        ...payload,
+        photoURL: `https://ui-avatars.com/api/?name=${encodeURIComponent(
+          payload.displayName || "User"
+        )}&background=random`,
+      };
     },
     logout: (state) => {
       state.user = null;

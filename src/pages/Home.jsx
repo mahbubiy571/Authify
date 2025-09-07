@@ -2,12 +2,12 @@ import { useSelector } from "react-redux";
 import { useLogout } from "../hooks/useLogout";
 import { useCollection } from "../hooks/useCollection";
 import { Link } from "react-router-dom";
+import Tasks from "./Tasks";
 
 function Home() {
   const { _logout, error, isPending } = useLogout();
   const { user } = useSelector((store) => store.user);
   const { data } = useCollection("users");
-  const { data: tasks } = useCollection("tasks");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100">
@@ -16,25 +16,27 @@ function Home() {
           Welcome,
           <span>
             <img
-              src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
-                user.displayName || "User"
-              )}&background=random`}
+              src={user.photoURL}
               alt={user.displayName}
               className="mx-1 w-6 h-6 rounded-full shadow-md object-cover"
             />
           </span>{" "}
           {user.displayName} 👋
         </h1>
-        <div>
-          <Link className="btn btn-primary" to="/create">
-            Create
-          </Link>
-        </div>
+
+        <Link
+          className="ml-auto mr-2 px-6 py-2 bg-gradient-to-r from-sky-500 to-cyan-600 
+             text-white font-semibold rounded-xl shadow-md 
+             hover:shadow-xl hover:scale-105 transition-all duration-300"
+          to="/create"
+        >
+          Create
+        </Link>
 
         {!isPending ? (
           <button
             onClick={_logout}
-            className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
+            className="px-6 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl shadow-md              hover:shadow-xl hover:scale-105 transition-all duration-300"
           >
             Logout
           </button>
@@ -114,6 +116,7 @@ function Home() {
             </div>
           ))}
       </div>
+      <Tasks />
     </div>
   );
 }

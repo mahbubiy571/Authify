@@ -35,16 +35,22 @@ function CreateTask() {
       title,
       description,
       dueTo,
-      attachedUsers,
+      attachedUsers: attachedUsers.map((u) => ({
+        uid: u.uid,
+        displayName: u.label,
+        photoURL: `https://ui-avatars.com/api/?name=${encodeURIComponent(
+          u.label || "User"
+        )}&background=random`,
+      })),
       comments: [],
     };
 
-    await addDoc(collection(db, "tasks"), {
-      ...task,
-    }).then(() => {
-      alert("qo'shildi");
-      navigate("/");
-    });
+    const cleanedTask = JSON.parse(JSON.stringify(task));
+
+    await addDoc(collection(db, "tasks"), cleanedTask);
+
+    alert("qo'shildi");
+    navigate("/");
     console.log(task);
   };
 
