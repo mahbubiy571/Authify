@@ -3,6 +3,7 @@ import { useRegister } from "../hooks/useRegister";
 import { useEffect, useState } from "react";
 import { formError } from "../components/ErrorId";
 import { useGoogle } from "../hooks/useGoogle";
+import { useGithub } from "../hooks/useGithub";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -19,6 +20,11 @@ function Register() {
     isPending: isPendingGoogle,
     error: errorGoogle,
   } = useGoogle();
+  const {
+    githubProvider,
+    isPending: isPendingGithub,
+    error: errorGithub,
+  } = useGithub();
 
   useEffect(() => {
     if (user?.name && user?.email && user?.password) {
@@ -63,6 +69,7 @@ function Register() {
                 className="input input-border focus:outline-none focus:border-blue-500 shadow-blue-500 focus:shadow-lg focus:shadow-blue-400/50 rounded w-full h-9.5"
                 required
               />
+
               {!isPending && (
                 <button
                   type="submit"
@@ -100,8 +107,14 @@ function Register() {
                   <span>Loading...</span>
                 </button>
               )}
+            </Form>
 
-              {!isPendingGoogle && (
+            <div className="mt-6 flex flex-col gap-3">
+              <p className="text-center text-gray-500 text-sm font-medium">
+                Or sign up with
+              </p>
+
+              {!isPendingGoogle ? (
                 <button
                   type="button"
                   onClick={googleProvider}
@@ -114,9 +127,7 @@ function Register() {
                   />
                   <span className="font-medium">Continue with Google</span>
                 </button>
-              )}
-
-              {isPendingGoogle && (
+              ) : (
                 <button
                   disabled
                   className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-400 bg-gray-50 cursor-not-allowed"
@@ -144,25 +155,71 @@ function Register() {
                   <span>Loading...</span>
                 </button>
               )}
-            </Form>
+
+              {!isPendingGithub ? (
+                <button
+                  type="button"
+                  onClick={githubProvider}
+                  className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-700 hover:bg-gray-100 transition"
+                >
+                  <img
+                    src="https://www.svgrepo.com/show/512317/github-142.svg"
+                    alt="GitHub"
+                    className="w-5 h-5"
+                  />
+                  <span className="font-medium">Continue with GitHub</span>
+                </button>
+              ) : (
+                <button
+                  disabled
+                  className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-400 bg-gray-50 cursor-not-allowed"
+                >
+                  <svg
+                    className="animate-spin h-5 w-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                  </svg>
+                  <span>Loading...</span>
+                </button>
+              )}
+            </div>
 
             {error && (
               <div className="text-red-600 text-center mt-3 text-sm">
                 {error}
               </div>
             )}
-
             {_error && (
               <div className="text-red-600 text-center mt-3 text-sm">
                 {_error}
               </div>
             )}
-
             {errorGoogle && (
               <div className="text-red-600 text-center mt-3 text-sm">
                 {errorGoogle}
               </div>
             )}
+            {errorGithub && (
+              <div className="text-red-600 text-center mt-3 text-sm">
+                {errorGithub}
+              </div>
+            )}
+
             <p className="text-center mt-3">
               Already have an account?{" "}
               <Link to="/login" className="link link-primary font-medium">
