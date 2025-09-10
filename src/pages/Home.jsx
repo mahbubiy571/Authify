@@ -15,14 +15,17 @@ function Home() {
       <div className="flex sm:flex-row sm:items-center sm:justify-between gap-1 px-4 sm:px-6 py-4 bg-white/70 backdrop-blur-md shadow-md sticky top-0 z-50 rounded-b-2xl">
         <h1 className="text-sm sm:text-2xl font-bold text-indigo-700 flex items-center flex-wrap">
           Welcome,
-          <span>
-            <img
-              src={user.photoURL}
-              alt={user.displayName}
-              className="mx-1 w-6 h-6 rounded-full shadow-md object-cover"
-            />
-          </span>
-          {user.displayName} 👋
+          <Link className="flex items-center" to="./profile">
+            <span>
+              <img
+                src={user.photoURL}
+                alt={user.displayName}
+                className="mx-1 w-6 h-6 rounded-full shadow-md object-cover"
+              />
+            </span>
+            {user.displayName}
+          </Link>
+          👋
         </h1>
 
         {!isPending ? (
