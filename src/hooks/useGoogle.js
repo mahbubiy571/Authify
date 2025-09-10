@@ -4,7 +4,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { login } from "../app/features/userSlice";
 import { getFirebaseErrorMessage } from "../components/ErrorId";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 export const useGoogle = () => {
   const dispatch = useDispatch();
@@ -21,16 +21,21 @@ export const useGoogle = () => {
         throw new Error("Registration failed");
       }
 
-      await setDoc(
-        doc(db, "users", req.user.uid),
-        {
+      const userRef = doc(db, "users", req.user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        await setDoc(userRef, {
           displayName: req.user.displayName,
           email: req.user.email,
           online: true,
           uid: req.user.uid,
-        },
-        { merge: true }
-      );
+        });
+      } else {
+        await updateDoc(userRef, {
+          online: true,
+        });
+      }
 
       dispatch(login(req.user));
       console.log(req.user);
