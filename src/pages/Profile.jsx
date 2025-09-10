@@ -48,7 +48,7 @@ function Profile() {
           {!user?.emailVerified && (
             <button
               onClick={sendEmailLink}
-              className="btn btn-primary rounded-xl mt-5 rounded-lg shadow-md"
+              className="btn btn-primary rounded-xl mt-5 shadow-md"
             >
               Send Verification Link
             </button>
