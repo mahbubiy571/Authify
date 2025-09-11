@@ -1,23 +1,25 @@
+import { useEffect } from "react";
 import {
   createBrowserRouter,
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import Login from "./pages/Login";
-import Register, { action } from "./pages/Register";
-import Home from "./pages/Home";
-import MainLayout from "./layouts/MainLayout";
-import ProtectedRoutes from "./components/ProtectedRoutes";
 import { useDispatch, useSelector } from "react-redux";
-import { action as RegisterAction } from "./pages/Register";
-import { action as LoginAction } from "./pages/Login";
-import { useEffect } from "react";
+import MainLayout from "./layouts/MainLayout";
 import { onAuthStateChanged } from "firebase/auth";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 import { auth } from "./firebase/config";
 import { isAuthReady, login } from "./app/features/userSlice";
-import CreateTask from "./pages/CreateTask";
-import Task from "./pages/Task";
-import Profile from "./pages/Profile";
+import {
+  Home,
+  Login,
+  Register,
+  CreateTask,
+  Task,
+  Profile,
+} from "./pages/index";
+import { action as RegisterAction } from "./pages/Register";
+import { action as LoginAction } from "./pages/Login";
 
 function App() {
   const dispatch = useDispatch();
