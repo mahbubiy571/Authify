@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { formError } from "../components/ErrorId";
 import { useGoogle } from "../hooks/useGoogle";
 import { useGithub } from "../hooks/useGithub";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -120,11 +122,7 @@ function Register() {
                   onClick={googleProvider}
                   className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-700 hover:bg-gray-100 transition"
                 >
-                  <img
-                    src="https://www.svgrepo.com/show/355037/google.svg"
-                    alt="Google"
-                    className="w-5 h-5"
-                  />
+                  <FcGoogle className="w-7 h-7" />
                   <span className="font-medium">Continue with Google</span>
                 </button>
               ) : (
@@ -162,11 +160,7 @@ function Register() {
                   onClick={githubProvider}
                   className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-700 hover:bg-gray-100 transition"
                 >
-                  <img
-                    src="https://www.svgrepo.com/show/512317/github-142.svg"
-                    alt="GitHub"
-                    className="w-5 h-5"
-                  />
+                  <FaGithub className="w-6 h-6" />
                   <span className="font-medium">Continue with GitHub</span>
                 </button>
               ) : (
