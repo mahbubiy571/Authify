@@ -26,15 +26,21 @@ export const useGoogle = () => {
 
       if (!userSnap.exists()) {
         await setDoc(userRef, {
+          uid: req.user.uid,
           displayName: req.user.displayName,
           email: req.user.email,
+          photoURL: req.user.photoURL,
+          providerId: req.user.providerData[0]?.providerId || "unknown",
+          emailVerified: req.user.emailVerified,
           online: true,
-          uid: req.user.uid,
         });
       } else {
         await updateDoc(userRef, {
           displayName: req.user.displayName,
           email: req.user.email,
+          photoURL: req.user.photoURL,
+          providerId: req.user.providerData[0]?.providerId || "unknown",
+          emailVerified: req.user.emailVerified,
           online: true,
         });
       }
