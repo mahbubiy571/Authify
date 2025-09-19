@@ -33,6 +33,8 @@ export const useGoogle = () => {
         });
       } else {
         await updateDoc(userRef, {
+          displayName: req.user.displayName,
+          email: req.user.email,
           online: true,
         });
       }
