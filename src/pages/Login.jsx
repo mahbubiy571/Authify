@@ -21,9 +21,16 @@ function Login() {
   const { resetPassword } = useResetPassword();
   const [forgetPassword, setForgetPassword] = useState(false);
   const [emailRecovery, setEmailRecovery] = useState("");
-  const { googleProvider, isPending: isPendingGoogle } = useGoogle();
-
-  const { githubProvider, isPending: isPendingGithub } = useGithub();
+  const {
+    googleProvider,
+    error: errorGoogle,
+    isPending: isPendingGoogle,
+  } = useGoogle();
+  const {
+    githubProvider,
+    error: errorGithub,
+    isPending: isPendingGithub,
+  } = useGithub();
 
   useEffect(() => {
     if (user?.email && user?.password) {
@@ -206,6 +213,18 @@ function Login() {
             {_error && (
               <div className="text-red-600 text-center mt-3 text-sm">
                 {getFirebaseErrorMessage(_error)}
+              </div>
+            )}
+
+            {errorGoogle && (
+              <div className="text-red-600 text-center mt-3 text-sm">
+                {getFirebaseErrorMessage(errorGoogle)}
+              </div>
+            )}
+
+            {errorGithub && (
+              <div className="text-red-600 text-center mt-3 text-sm">
+                {getFirebaseErrorMessage(errorGithub)}
               </div>
             )}
 
