@@ -3,6 +3,10 @@ import { useEffect, useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 import { useResetPassword } from "../hooks/useResetPassword";
 import { formError } from "../components/ErrorId";
+import { useGoogle } from "../hooks/useGoogle";
+import { useGithub } from "../hooks/useGithub";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -17,6 +21,17 @@ function Login() {
   const { resetPassword } = useResetPassword();
   const [forgetPassword, setForgetPassword] = useState(false);
   const [emailRecovery, setEmailRecovery] = useState("");
+  const {
+    googleProvider,
+    isPending: isPendingGoogle,
+    error: errorGoogle,
+  } = useGoogle();
+
+  const {
+    githubProvider,
+    isPending: isPendingGithub,
+    error: errorGithub,
+  } = useGithub();
 
   useEffect(() => {
     if (user?.email && user?.password) {
@@ -59,6 +74,7 @@ function Login() {
                     className="input input-border focus:outline-none focus:border-blue-500 shadow-blue-500 focus:shadow-lg focus:shadow-blue-400/50 rounded w-full h-9.5"
                     required
                   />
+
                   {!isPending && (
                     <button
                       type="submit"
@@ -96,6 +112,51 @@ function Login() {
                       <span>Loading...</span>
                     </button>
                   )}
+                  <div className="mt-3 flex flex-col gap-3">
+                    <p className="text-center text-gray-500 text-sm font-medium">
+                      Or sign in with
+                    </p>
+
+                    {!isPendingGoogle ? (
+                      <button
+                        type="button"
+                        onClick={googleProvider}
+                        className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-700 hover:bg-gray-100 transition"
+                      >
+                        <FcGoogle className="w-7 h-7" />
+                        <span className="font-medium">
+                          Continue with Google
+                        </span>
+                      </button>
+                    ) : (
+                      <button
+                        disabled
+                        className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-400 bg-gray-50 cursor-not-allowed"
+                      >
+                        Loading...
+                      </button>
+                    )}
+
+                    {!isPendingGithub ? (
+                      <button
+                        type="button"
+                        onClick={githubProvider}
+                        className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-700 hover:bg-gray-100 transition"
+                      >
+                        <FaGithub className="w-6 h-6" />
+                        <span className="font-medium">
+                          Continue with GitHub
+                        </span>
+                      </button>
+                    ) : (
+                      <button
+                        disabled
+                        className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-400 bg-gray-50 cursor-not-allowed"
+                      >
+                        Loading...
+                      </button>
+                    )}
+                  </div>
                 </Form>
               </>
             )}
