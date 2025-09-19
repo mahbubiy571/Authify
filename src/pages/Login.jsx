@@ -205,7 +205,7 @@ function Login() {
 
             {_error && (
               <div className="text-red-600 text-center mt-3 text-sm">
-                {_error}
+                {getFirebaseErrorMessage(_error)}
               </div>
             )}
 

@@ -39,6 +39,15 @@ export function getFirebaseErrorMessage(error) {
     case "auth/too-many-requests":
       return "Too many login attempts. Please wait and try again.";
 
+    case "auth/popup-closed-by-user":
+      return "The login popup was closed before completing sign in.";
+
+    case "auth/cancelled-popup-request":
+      return "A previous login popup was closed. Please try again.";
+
+    case "auth/popup-blocked":
+      return "The login popup was blocked by your browser. Please allow popups and try again.";
+
     default:
       return "An unknown error occurred.";
   }
