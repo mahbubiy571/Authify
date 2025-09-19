@@ -21,17 +21,9 @@ function Login() {
   const { resetPassword } = useResetPassword();
   const [forgetPassword, setForgetPassword] = useState(false);
   const [emailRecovery, setEmailRecovery] = useState("");
-  const {
-    googleProvider,
-    isPending: isPendingGoogle,
-    error: errorGoogle,
-  } = useGoogle();
+  const { googleProvider, isPending: isPendingGoogle } = useGoogle();
 
-  const {
-    githubProvider,
-    isPending: isPendingGithub,
-    error: errorGithub,
-  } = useGithub();
+  const { githubProvider, isPending: isPendingGithub } = useGithub();
 
   useEffect(() => {
     if (user?.email && user?.password) {
