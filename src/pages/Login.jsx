@@ -2,7 +2,7 @@ import { Form, Link, useActionData } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 import { useResetPassword } from "../hooks/useResetPassword";
-import { formError } from "../components/ErrorId";
+import { formError, getFirebaseErrorMessage } from "../components/ErrorId";
 import { useGoogle } from "../hooks/useGoogle";
 import { useGithub } from "../hooks/useGithub";
 import { FcGoogle } from "react-icons/fc";
