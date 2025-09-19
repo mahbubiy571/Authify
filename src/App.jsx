@@ -20,6 +20,7 @@ import {
 } from "./pages/index";
 import { action as RegisterAction } from "./pages/Register";
 import { action as LoginAction } from "./pages/Login";
+import UserInfo from "./pages/UserInfo";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +49,10 @@ function App() {
         {
           path: "/profile",
           element: <Profile />,
+        },
+        {
+          path: "/userinfo/:id",
+          element: <UserInfo />,
         },
       ],
     },

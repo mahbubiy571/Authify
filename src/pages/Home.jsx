@@ -94,36 +94,35 @@ function Home() {
           <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-20">
             {data &&
               data.map((user) => (
-                <div
-                  key={user.uid}
-                  className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-lg p-6 text-center transition-all duration-300 hover:scale-105"
-                >
-                  <div className="relative mb-4">
-                    <img
-                      src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
-                        user.displayName || "User"
-                      )}&background=random`}
-                      alt={user.displayName}
-                      className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-4 border-white shadow-md mx-auto object-cover"
-                    />
-                    <span
-                      className={`absolute bottom-2 right-2 w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-white ${
-                        user.online ? "bg-green-500" : "bg-gray-400"
-                      }`}
-                    ></span>
-                  </div>
+                <Link key={user.uid} to={`/userinfo/${user.uid}`}>
+                  <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-lg p-6 text-center transition-all duration-300 hover:scale-105">
+                    <div className="relative mb-4">
+                      <img
+                        src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          user.displayName || "User"
+                        )}&background=random`}
+                        alt={user.displayName}
+                        className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-4 border-white shadow-md mx-auto object-cover"
+                      />
+                      <span
+                        className={`absolute bottom-2 right-2 w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-white ${
+                          user.online ? "bg-green-500" : "bg-gray-400"
+                        }`}
+                      ></span>
+                    </div>
 
-                  <h2 className="text-base sm:text-lg font-semibold text-gray-900">
-                    {user.displayName}
-                  </h2>
-                  <p
-                    className={`text-xs sm:text-sm font-medium mb-4 ${
-                      user.online ? "text-green-600" : "text-gray-500"
-                    }`}
-                  >
-                    {user.online ? "Online" : "Offline"}
-                  </p>
-                </div>
+                    <h2 className="text-base sm:text-lg font-semibold text-gray-900">
+                      {user.displayName}
+                    </h2>
+                    <p
+                      className={`text-xs sm:text-sm font-medium mb-4 ${
+                        user.online ? "text-green-600" : "text-gray-500"
+                      }`}
+                    >
+                      {user.online ? "Online" : "Offline"}
+                    </p>
+                  </div>
+                </Link>
               ))}
           </div>
 

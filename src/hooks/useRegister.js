@@ -26,6 +26,7 @@ export const useRegister = () => {
 
       await setDoc(doc(db, "users", req.user.uid), {
         displayName: req.user.displayName,
+        email: req.user.email,
         photoURL: req.user.photoURL,
         online: true,
         uid: req.user.uid,

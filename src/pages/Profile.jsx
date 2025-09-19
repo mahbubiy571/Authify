@@ -24,7 +24,12 @@ function Profile() {
       <div className="w-96 backdrop-blur-md bg-white/20 shadow-2xl rounded-2xl border border-white/30">
         <div className="flex flex-col items-center p-8">
           <img
-            src={user?.photoURL || "https://via.placeholder.com/150"}
+            src={
+              user.photoURL ||
+              `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                user.displayName || "User"
+              )}&background=random`
+            }
             alt={user?.displayName || "User"}
             className="rounded-full w-28 h-28 object-cover border-4 border-white shadow-md"
           />

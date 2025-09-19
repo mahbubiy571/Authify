@@ -74,11 +74,13 @@ function Task() {
                   }`}
                 >
                   {!isMine && (
-                    <img
-                      src={comment.photoURL}
-                      alt={comment.displayName}
-                      className="w-10 h-10 rounded-full shadow-lg border-2 border-purple-400"
-                    />
+                    <Link to={`/userinfo/${user.uid}`}>
+                      <img
+                        src={comment.photoURL}
+                        alt={comment.displayName}
+                        className="w-10 h-10 rounded-full shadow-lg border-2 border-purple-400"
+                      />
+                    </Link>
                   )}
 
                   <div
@@ -110,11 +112,13 @@ function Task() {
                   </div>
 
                   {isMine && (
-                    <img
-                      src={comment.photoURL}
-                      alt={comment.displayName}
-                      className="w-10 h-10 rounded-full shadow-lg border-2 border-indigo-400"
-                    />
+                    <Link to={`/userinfo/${user.uid}`}>
+                      <img
+                        src={comment.photoURL}
+                        alt={comment.displayName}
+                        className="w-10 h-10 rounded-full shadow-lg border-2 border-indigo-400"
+                      />
+                    </Link>
                   )}
                 </div>
               );

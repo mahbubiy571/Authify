@@ -10,12 +10,13 @@ import { useNavigate } from "react-router-dom";
 export function useLogout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isPending, setIsPending] = useState();
+  const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
   const { user } = useSelector((store) => store.user);
 
   const _logout = async () => {
     try {
+      setIsPending(true);
       const userRef = doc(db, "users", user.uid);
 
       await updateDoc(userRef, {
