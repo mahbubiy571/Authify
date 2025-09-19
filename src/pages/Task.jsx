@@ -4,6 +4,7 @@ import { db } from "../firebase/config";
 import { doc, updateDoc } from "firebase/firestore";
 import { useSelector } from "react-redux";
 import { FiSend, FiArrowLeft } from "react-icons/fi";
+import { formatTimestampToTime } from "../utils/index";
 
 function Task() {
   const { id } = useParams();
@@ -24,6 +25,7 @@ function Task() {
       uid: user.uid,
       photoURL: user.photoURL,
       displayName: user.displayName,
+      createdAt: new Date(),
     };
 
     const commentRef = doc(db, "tasks", data.id);
@@ -86,7 +88,18 @@ function Task() {
                         : "bg-white text-gray-800 rounded-bl-none hover:scale-105"
                     }`}
                   >
-                    <p className="break-words">{comment.text}</p>
+                    <div className="flex justify-between items-center gap-2">
+                      <p className="break-words">{comment.text}</p>
+                      <span
+                        className={`inline-block mt-1 text-[10px] px-2 py-0.5 rounded-full ${
+                          isMine
+                            ? "bg-white/20 text-white/80"
+                            : "bg-gray-200 text-gray-600"
+                        }`}
+                      >
+                        {formatTimestampToTime(comment.createdAt)}
+                      </span>
+                    </div>
                     <span
                       className={`text-[10px] block mt-1 ${
                         isMine ? "text-white/70" : "text-gray-500"

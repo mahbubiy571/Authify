@@ -29,9 +29,10 @@ function Tasks() {
               className="block bg-white/70 backdrop-blur-lg rounded-2xl shadow-md 
                          p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
             >
-              <h5 className="text-lg font-semibold text-gray-800 mb-4 line-clamp-2">
+              <h5 className="text-lg font-semibold text-gray-800 mb-1 line-clamp-2">
                 {task.title}
               </h5>
+              <p className="text-gray-500 italic mb-6">{task.description}</p>
 
               <div className="flex -space-x-3">
                 {task.attachedUsers.map((user) => (
